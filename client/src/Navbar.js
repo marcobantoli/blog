@@ -1,8 +1,9 @@
 import React from 'react'
+import './Navbar.css';
 
 function Navbar() {
   return (
-    <nav>
+    <nav className="navbar">
       <div className="logo">Blog</div>
       <ul>
         <li>
