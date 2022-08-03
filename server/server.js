@@ -41,7 +41,7 @@ app.post('/users/login', async (req, res) => {
 
 // <----------Posts routes---------->
 
-// GET (all posts)
+// GET (all posts) [WORKS]
 app.get('/posts', async (req, res) => {
   try {
     const posts = await pool.query('SELECT * FROM posts');
@@ -51,21 +51,22 @@ app.get('/posts', async (req, res) => {
   }
 });
 
-// FIX: POST
+// POST [WORKS]
 app.post('/posts', async (req, res) => {
   try {
     const date = getCurrentDate();
     const title = req.body.title;
     const content = req.body.content;
     const userId = req.body.userId;
-    const newPost = await pool.query('INSERT INTO posts(post_id, date_posted, title, content, user_id) VALUES(DEFAULT, $1, $2, $3, $4)', [date, title, content, userId]);
-    res.json(newPost);
+
+    await pool.query('INSERT INTO posts(post_id, date_posted, title, content, user_id) VALUES(DEFAULT, $1, $2, $3, $4)', [date, title, content, userId]);
+    res.sendStatus(201);
   } catch {
     res.sendStatus(500);
   }
 });
 
-// GET (one post)
+// GET (one post) [WORKS]
 app.get('/posts/:id', async (req, res) => {
   try {
     const getPost = await pool.query('SELECT * FROM posts WHERE post_id=$1', [req.params.id]);
@@ -75,7 +76,7 @@ app.get('/posts/:id', async (req, res) => {
   }
 });
 
-// PUT
+// PUT [WORKS]
 app.put('/posts/:id', async (req, res) => {
   try {
     const newTitle = req.body.title;
@@ -87,7 +88,7 @@ app.put('/posts/:id', async (req, res) => {
   }
 });
 
-// DELETE
+// DELETE [WORKS]
 app.delete('/posts/:id', async (req, res) => {
   try {
     await pool.query('DELETE FROM posts WHERE post_id = $1', [req.params.id]);
@@ -159,7 +160,7 @@ function getCurrentDate() {
   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
   var yyyy = today.getFullYear();
 
-  today = mm + '/' + dd + '/' + yyyy;
+  today = yyyy + '/' + mm + '/' + dd;
   return today;
 }
 
