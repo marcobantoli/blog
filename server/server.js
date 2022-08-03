@@ -1,43 +1,12 @@
 const express = require('express');
 const pool = require('./db.js');
 const bcrypt = require('bcrypt');
-const { response } = require('express');
+const { response, query } = require('express');
 
 const PORT = 3001;
 
 const app = express();
 app.use(express.json());
-
-// Auth routes
-/*app.post('/users', async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const user = { username: req.body.username, password: hashedPassword };
-    console.log(user);
-    const newUser = await pool.query('INSERT INTO accounts(user_id, username, password) VALUES(DEFAULT, $1, $2) RETURNING *', [user.username, user.password]);
-    res.json(newUser);
-  } catch {
-    res.sendStatus(500);
-  }
-});
-
-app.post('/users/login', async (req, res) => {
-  const user = (users.find(user => user.name === req.body.name));
-  if (user === null) {
-    return res.sendStatus(400);
-  } else {
-    try {
-      if (await bcrypt.compare(req.body.password, user.password)) {
-        res.send('Success');
-      } else {
-        res.send('Not allowed');
-      }
-    } catch {
-      res.sendStatus(500);
-    }
-  }
-});
-*/
 
 // <----------Posts routes---------->
 
@@ -100,16 +69,7 @@ app.delete('/posts/:id', async (req, res) => {
 
 // <----------Users routes---------->
 
-// GET (all users) [WORKS]
-app.get('/users', async (req, res) => {
-  try {
-    const users = await pool.query('SELECT * FROM accounts');
-    res.json(users.rows);
-  } catch {
-    res.sendStatus(500);
-  }
-});
-
+// <-----Auth routes----->
 // POST [WORKS]
 app.post('/users', async (req, res) => {
   try {
@@ -117,6 +77,34 @@ app.post('/users', async (req, res) => {
     const user = { username: req.body.username, password: hashedPassword };
     await pool.query('INSERT INTO accounts(user_id, username, password) VALUES(DEFAULT, $1, $2)', [user.username, user.password]);
     res.sendStatus(201);
+  } catch {
+    res.sendStatus(500);
+  }
+});
+
+// LOGIN [WORKS]
+app.post('/users/login', async (req, res) => {
+  const user = await pool.query('SELECT * FROM accounts WHERE username=$1', [req.body.username]);
+  if (!user) {
+    res.sendStatus(400);
+  }
+  try {
+    if (await bcrypt.compare(req.body.password, user.rows[0].password)) {
+      res.send('Success');
+    } else {
+      res.send('Not allowed');
+    }
+  } catch {
+    res.sendStatus(500);
+  }
+});
+// <-----Auth routes END----->
+
+// GET (all users) [WORKS]
+app.get('/users', async (req, res) => {
+  try {
+    const users = await pool.query('SELECT * FROM accounts');
+    res.json(users.rows);
   } catch {
     res.sendStatus(500);
   }
