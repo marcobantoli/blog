@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { getPosts, getPost, setPost, updatePost, deletePost } = require('../controllers/postController.js');
 
-// <----------Posts routes---------->
-
 // GET (all posts) [WORKS]
 router.get('/', getPosts);
 
