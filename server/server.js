@@ -1,71 +1,18 @@
+require('dotenv').config();
 const express = require('express');
-const pool = require('./db.js');
+const pool = require('./config/db.js');
 const bcrypt = require('bcrypt');
-const { response, query } = require('express');
+const jwt = require('jsonwebtoken');
+
+const posts = require('./routes/postRoutes.js');
 
 const PORT = 3001;
 
 const app = express();
 app.use(express.json());
 
-// <----------Posts routes---------->
-
-// GET (all posts) [WORKS]
-app.get('/posts', async (req, res) => {
-  try {
-    const posts = await pool.query('SELECT * FROM posts');
-    res.json(posts.rows);
-  } catch {
-    res.sendStatus(500);
-  }
-});
-
-// POST [WORKS]
-app.post('/posts', async (req, res) => {
-  try {
-    const date = getCurrentDate();
-    const title = req.body.title;
-    const content = req.body.content;
-    const userId = req.body.userId;
-
-    await pool.query('INSERT INTO posts(post_id, date_posted, title, content, user_id) VALUES(DEFAULT, $1, $2, $3, $4)', [date, title, content, userId]);
-    res.sendStatus(201);
-  } catch {
-    res.sendStatus(500);
-  }
-});
-
-// GET (one post) [WORKS]
-app.get('/posts/:id', async (req, res) => {
-  try {
-    const getPost = await pool.query('SELECT * FROM posts WHERE post_id=$1', [req.params.id]);
-    res.json(getPost.rows[0]);
-  } catch {
-    res.sendStatus(500);
-  }
-});
-
-// PUT [WORKS]
-app.put('/posts/:id', async (req, res) => {
-  try {
-    const newTitle = req.body.title;
-    const newContent = req.body.content;
-    await pool.query('UPDATE posts SET title = $1, content = $2 WHERE post_id = $3', [newTitle, newContent, req.params.id]);
-    res.sendStatus(204);
-  } catch {
-    res.sendStatus(500);
-  }
-});
-
-// DELETE [WORKS]
-app.delete('/posts/:id', async (req, res) => {
-  try {
-    await pool.query('DELETE FROM posts WHERE post_id = $1', [req.params.id]);
-    res.sendStatus(204);
-  } catch {
-    res.sendStatus(500);
-  }
-});
+// Posts routes
+app.use('/api/posts', posts);
 
 // <----------Users routes---------->
 
@@ -90,7 +37,8 @@ app.post('/users/login', async (req, res) => {
   }
   try {
     if (await bcrypt.compare(req.body.password, user.rows[0].password)) {
-      res.send('Success');
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+      res.json({ accessToken: accessToken });
     } else {
       res.send('Not allowed');
     }
@@ -140,17 +88,6 @@ app.delete('/users/:id', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-
-function getCurrentDate() {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = yyyy + '/' + mm + '/' + dd;
-  return today;
-}
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
