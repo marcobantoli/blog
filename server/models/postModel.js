@@ -2,9 +2,8 @@ const pool = require('../config/db.js');
 
 const Post = {};
 
-Post.create = (date, title, content, userId) => {
-    return pool.query('INSERT INTO posts(post_id, date_posted, title, content, user_id) VALUES(DEFAULT, $1, $2, $3, $4)', ['title', 'content', '123']);
-    // return pool.query('INSERT INTO posts(post_id, date_posted, title, content, user_id) VALUES(DEFAULT, $1, $2, $3, $4)', [date, title, content, userId]);
+Post.create = (title, content, userId) => {
+    return pool.query('INSERT INTO posts(post_id, date_posted, title, content, user_id) VALUES(DEFAULT, DEFAULT, $1, $2, $3)', [title, content, userId]);
 };
 
 Post.get = () => {
@@ -16,7 +15,11 @@ Post.update = (newTitle, newContent, id) => {
 }
 
 Post.delete = (id) => {
-    return pool.query('DELETE FROM posts WHERE post_id = $1', [id]);
+    return pool.query('DELETE FROM posts WHERE post_id=$1', [id]);
+}
+
+Post.getById = (id) => {
+    return pool.query('SELECT * FROM posts WHERE post_id=$1', [id]);
 }
 
 module.exports = Post;

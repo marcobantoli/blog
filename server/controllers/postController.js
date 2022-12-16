@@ -1,8 +1,9 @@
-const postModel = require('../models/postModel.js');
+const Post = require('../models/postModel.js');
 
+// All posts (from everyone)
 const getPosts = async (req, res) => {
   try {
-    const posts = await postModel.get();
+    const posts = await Post.get();
     res.json(posts.rows);
   } catch {
     res.sendStatus(500);
@@ -11,47 +12,58 @@ const getPosts = async (req, res) => {
 
 const setPost = async (req, res) => {
   try {
-    const date = getCurrentDate();
     const title = req.body.title;
     const content = req.body.content;
-    const userId = req.body.userId;
+    const userId = req.userId;
 
-    await postModel.create(date, title, content, userId);
+    await Post.create(title, content, userId);
     res.sendStatus(201);
   } catch {
     res.sendStatus(500);
   }
 };
 
+// should be only allowed to delete/update own posts
+
 const updatePost = async (req, res) => {
   try {
     const newTitle = req.body.title;
     const newContent = req.body.content;
-    await postModel.update(newTitle, newContent, req.params.id);
-    res.sendStatus(204);
+    const post = await Post.getById(req.params.id);
+
+    const postUserId = post.rows[0].user_id;
+
+    if (postUserId !== req.userId) {
+      res.status(401);
+    }
+
+    await Post.update(newTitle, newContent, req.params.id);
+    res.status(204);
   } catch {
-    res.sendStatus(500);
+    res.status(500);
   }
+  
+  res.send();
 };
 
 const deletePost = async (req, res) => {
   try {
-    await postModel.delete(req.params.id);
-    res.sendStatus(204);
+    const postId = req.params.id;
+    const findPost = await Post.getById(postId);
+    const postUserId = findPost.rows[0].user_id;
+    const loggedInUser = req.userId;
+    
+    if (loggedInUser !== postUserId) {
+      res.status(401);
+    }
+
+    await Post.delete(postId);
+    res.status(204);
   } catch {
-    res.sendStatus(500);
+    res.status(500);
   }
-};
 
-
-function getCurrentDate() {
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = yyyy + '/' + mm + '/' + dd;
-  return today;
+  res.send();
 };
 
 // const getPost = async (req, res) => {
@@ -68,4 +80,5 @@ module.exports = {
     setPost,
     updatePost,
     deletePost,
+    // getPost,
 };

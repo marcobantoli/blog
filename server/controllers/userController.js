@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
   const user = await User.get(req.body.username);
 
   if (!user) {
@@ -11,10 +11,10 @@ loginUser = async (req, res) => {
   }
   try {
     const match = await bcrypt.compare(req.body.password, user.rows[0].password);
-
+    
     if (match) {
-      const accessToken = jwt.sign(user.rows[0].user_id, process.env.ACCESS_TOKEN_SECRET);
-      res.json({ accessToken });
+      const accessToken = generateToken(user.rows[0].user_id);
+      res.status(201).json({ accessToken });
     } else {
       res.send('Not allowed');
     }
@@ -23,21 +23,36 @@ loginUser = async (req, res) => {
   }
 };
 
-registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
+  if (!req.body.username || !req.body.password) {
+    res.sendStatus(400);
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    const user = { username: req.body.username, password: hashedPassword };
 
-    await User.register(user.username, user.password);
-    res.sendStatus(201);
+    const returnVal = await User.register(req.body.username, hashedPassword);
+    const userId = returnVal.rows[0].user_id;
+
+    res.status(201).json({ token: generateToken(userId) });
   } catch {
     res.sendStatus(500);
   }
 };
 
-getMe = async (req, res) => {
-    res.json({ message: 'User data' });
+const getMe = async (req, res) => {
+    const userId = req.userId;
+
+    const getUser =  await User.getById(userId);
+
+    const username = getUser.rows[0].username;
+
+    res.status(200).json({ username: username, userId: userId });
 };
+
+const generateToken = (id) => {
+  return jwt.sign(id, process.env.ACCESS_TOKEN_SECRET);
+}
 
 module.exports = {
     loginUser,

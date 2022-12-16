@@ -2,6 +2,7 @@ const pool = require('../config/db.js');
 const express = require('express');
 const router = express.Router();
 const { loginUser, registerUser, getMe } = require('../controllers/userController.js');
+const { protect } = require('../middleware/authMiddleware.js');
 
 // <-----Auth routes----->
 
@@ -12,7 +13,7 @@ router.post('/', registerUser);
 router.post('/login', loginUser);
 
 // GET [WORKS]
-router.get('/me', getMe);
+router.get('/me', protect, getMe);
 
 // <-----Auth routes END----->
 
