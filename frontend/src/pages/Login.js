@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import './Login.css';
 
 function Login({ handleLogin }) {
@@ -8,8 +7,6 @@ function Login({ handleLogin }) {
     username: "",
     password: ""
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -21,7 +18,6 @@ function Login({ handleLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(formData.username, formData.password);
-    navigate('/');
   };
 
   return (

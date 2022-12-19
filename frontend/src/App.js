@@ -5,6 +5,7 @@ import Login from './pages/Login.js';
 import Register from './pages/Register.js';
 import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Axios from 'axios';
 
 function App() {
@@ -13,11 +14,15 @@ function App() {
     userId: ''
   });
 
+  const navigate = useNavigate();
+
   const handleLogout = (event) => {
     setUser({
       username: '',
       userId: ''
     });
+
+    localStorage.removeItem('token');
   };
 
   const handleLogin = async (username, password) => {
@@ -28,15 +33,18 @@ function App() {
       .then(function (response) {
         const accessToken = response.data.accessToken;
         localStorage.setItem("token", accessToken);
+
+        setUser({
+          username: username,
+          userId: password
+        });
+
+        navigate('/');
       })
       .catch(function (error) {
         console.log(error);
+        alert(error.message);
       });
-
-    setUser({
-      username: username,
-      userId: password
-    });
   }
 
   const handleRegister = async (username, password) => {
@@ -47,15 +55,18 @@ function App() {
       .then(function (response) {
         const accessToken = response.data.token;
         localStorage.setItem("token", accessToken);
+
+        setUser({
+          username: username,
+          userId: password
+        });
+
+        navigate('/');
       })
       .catch(function (error) {
         console.log(error);
+        alert(error.message);
       });
-
-    setUser({
-      username: username,
-      userId: password
-    });
   };
 
   return (

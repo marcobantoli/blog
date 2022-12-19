@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import './Register.css';
 
 function Register({ handleRegister }) {
@@ -9,8 +8,6 @@ function Register({ handleRegister }) {
     password: "",
     confirmPassword: ""
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -26,7 +23,6 @@ function Register({ handleRegister }) {
       alert('Passwords do not match');
     } else {
       handleRegister(formData.username, formData.password);
-      navigate('/');
     }
   };
 
