@@ -1,0 +1,9 @@
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    width: 50%;
+    height: 30%;
+    margin: auto;
+    margin-top: 3rem;
+}

@@ -4,9 +4,9 @@ const Post = require('../models/postModel.js');
 const getPosts = async (req, res) => {
   try {
     const posts = await Post.get();
-    res.json(posts.rows);
+    res.status(200).json(posts.rows);
   } catch {
-    res.sendStatus(500);
+    console.log('Error');
   }
 };
 

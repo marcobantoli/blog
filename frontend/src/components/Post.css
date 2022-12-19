@@ -1,0 +1,38 @@
+.post-container {
+    width: 100%;
+    display: grid;
+    flex-direction: row;
+    gap: 2rem;
+    border-top: 1px solid black;
+    cursor: pointer;
+}
+
+.date {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.title {
+    font-size: 2rem;
+    font-style: bold;
+}
+
+.content {
+    font-size: 1.5rem;
+}
+
+.post-container:hover {
+    animation-name: hovereffect;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hovereffect {
+    from {
+        background-color: white;
+    }
+
+    to {
+        background-color: lightgray;
+    }
+}

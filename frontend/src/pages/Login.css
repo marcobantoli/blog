@@ -1,0 +1,19 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.input-box {
+  width: 30%;
+  margin: auto;
+  font-family: inherit;
+  font-size: 0.8em;
+}
+
+.submit-button {
+  width: 30%;
+  margin: auto;
+  font-family: inherit;
+  font-size: 0.8em;
+}

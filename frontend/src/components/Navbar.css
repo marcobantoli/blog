@@ -1,0 +1,54 @@
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 2px solid #ccc;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+  margin-right: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  font-size: 2rem;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  display: block;
+  padding: 0.8rem;
+}
+
+a:hover {
+  color: gray;
+}
+
+.logo {
+  font-size: 4rem;
+  margin-left: 23rem;
+}
+
+.logout-button {
+  font-family: inherit;
+  font-size: 2rem;
+  background-color: lightskyblue;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.logout-button:hover {
+  background-color: lightblue;
+}

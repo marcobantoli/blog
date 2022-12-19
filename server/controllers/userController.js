@@ -7,7 +7,7 @@ const loginUser = async (req, res) => {
   const user = await User.get(req.body.username);
 
   if (!user) {
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
   try {
     const match = await bcrypt.compare(req.body.password, user.rows[0].password);
@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
       const accessToken = generateToken(user.rows[0].user_id);
       res.status(201).json({ accessToken });
     } else {
-      res.send('Not allowed');
+      res.sendStatus(401);
     }
   } catch {
     res.sendStatus(500);
@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
 
 const registerUser = async (req, res) => {
   if (!req.body.username || !req.body.password) {
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
 
   try {
