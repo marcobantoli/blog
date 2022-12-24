@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
-import './LoginRegister.css';
+import React, { useState } from 'react';
+import './styles/LoginRegister.css';
 
 function Register({ handleRegister }) {
   const [formData, setFormData] = useState({
@@ -36,4 +35,4 @@ function Register({ handleRegister }) {
   );
 }
 
-export default Register
+export default Register;

@@ -1,8 +1,7 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import MyPostsList from '../components/MyPostsList';
-import './MyPosts.css';
+import './styles/MyPosts.css';
 
 function MyPosts() {
   const [myPosts, setMyPosts] = useState([]);

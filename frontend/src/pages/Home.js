@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import React from 'react';
-import './Home.css';
+import React, { useEffect, useState } from 'react';
 import PostList from '../components/PostList.js';
 import Axios from 'axios';
+import './styles/Home.css';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -26,4 +25,4 @@ function Home() {
   );
 }
 
-export default Home
+export default Home;

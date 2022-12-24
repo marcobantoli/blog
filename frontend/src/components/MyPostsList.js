@@ -1,6 +1,6 @@
 import React from 'react';
 import MyPost from './MyPost.js';
-import './MyPostsList.css';
+import './styles/MyPostsList.css';
 
 function MyPostsList({ myPosts, handleDelete }) {
   return (

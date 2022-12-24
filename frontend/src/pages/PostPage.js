@@ -1,8 +1,7 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
-import './PostPage.css';
+import './styles/PostPage.css';
 
 function PostPage() {
   const { id } = useParams();

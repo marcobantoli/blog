@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import './MyPost.css';
+import './styles/MyPost.css';
 
 function MyPost({ datePosted, title, content, id, handleDelete }) {
   const navigate = useNavigate();

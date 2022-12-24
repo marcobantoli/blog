@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from '../components/Post.js';
-import './PostList.css';
+import './styles/PostList.css';
 
 function PostList({ posts }) {
   return (
