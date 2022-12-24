@@ -104,7 +104,7 @@ function App() {
     };
 
     const changes = {
-      title,
+      title,  
       content
     };
 

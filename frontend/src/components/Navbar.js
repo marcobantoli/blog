@@ -10,6 +10,7 @@ function Navbar({ user, handleLogout }) {
         <ul>
           { user.username !== '' ? (
             <>
+              <Link className="link-nav" to="/">Latest Posts</Link>
               <Link className="link-nav" id="create-nav" to="/create">Create Post</Link>
               <Link className="link-nav" to="/me/posts">My Posts</Link>
               <button className="logout-button" onClick={handleLogout}>
@@ -19,7 +20,7 @@ function Navbar({ user, handleLogout }) {
           ) : (
             <>
               <li>
-                <Link className="link-nav" to="/">Posts</Link>
+                <Link className="link-nav" to="/">Latest Posts</Link>
               </li>
               <li>
                 <Link className="link-nav" to="/login">Login</Link>
