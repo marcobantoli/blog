@@ -2,18 +2,19 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 3em;
 }
 
 .input-box {
   width: 30%;
   margin: auto;
   font-family: inherit;
-  font-size: 0.8em;
+  font-size: 2rem;
 }
 
 .submit-button {
   width: 30%;
   margin: auto;
   font-family: inherit;
-  font-size: 0.8em;
+  font-size: 2rem;
 }

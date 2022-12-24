@@ -10,6 +10,10 @@ Post.get = () => {
     return pool.query('SELECT * FROM posts');
 }
 
+Post.getUserPosts = (userId) => {
+    return pool.query('SELECT * FROM posts WHERE user_id=$1', [userId]);
+}
+
 Post.update = (newTitle, newContent, id) => {
     return pool.query('UPDATE posts SET title = $1, content = $2 WHERE post_id = $3', [newTitle, newContent, id]);
 }

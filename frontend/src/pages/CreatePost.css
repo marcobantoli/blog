@@ -1,0 +1,30 @@
+.create-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  gap: 2em;
+}
+
+.input-title {
+  width: 50%;
+  margin: auto;
+  font-family:'Times New Roman', Times, serif;
+  font-size: 4rem;
+  border: none;
+}
+
+.input-content {
+  width: 50%;
+  margin: auto;
+  font-family: inherit;
+  border: none;
+  resize: none;
+  font-size: 2rem;
+}
+
+.create-button {
+  width: 30%;
+  margin: auto;
+  font-family: inherit;
+  font-size: 2rem;
+}

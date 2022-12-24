@@ -16,20 +16,26 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  gap: 1rem;
+  gap: 2.5em;
   margin-right: 20rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-a {
+
+.link-nav {
   font-size: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   text-decoration: none;
+  justify-content: space-between;
   color: black;
-  display: block;
-  padding: 0.8rem;
+}
+
+#create-nav {
+  width: 6em;
 }
 
 a:hover {
@@ -44,11 +50,8 @@ a:hover {
 .logout-button {
   font-family: inherit;
   font-size: 2rem;
-  background-color: lightskyblue;
-  border: 2px solid black;
-  border-radius: 10px;
-}
-
-.logout-button:hover {
-  background-color: lightblue;
+  border-radius: 5px;
+  color: white;
+  background-color: black;
+  cursor: pointer; 
 }

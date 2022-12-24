@@ -9,19 +9,23 @@ function Navbar({ user, handleLogout }) {
         <div className="logo">rouger</div>
         <ul>
           { user.username !== '' ? (
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
+            <>
+              <Link className="link-nav" id="create-nav" to="/create">Create Post</Link>
+              <Link className="link-nav" to="/me/posts">My Posts</Link>
+              <button className="logout-button" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <li>
-                <Link to="/">Posts</Link>
+                <Link className="link-nav" to="/">Posts</Link>
               </li>
               <li>
-                <Link to="/login">Login</Link>
+                <Link className="link-nav" to="/login">Login</Link>
               </li>
               <li>
-                <Link to="/register">Register</Link>
+                <Link className="link-nav" to="/register">Register</Link>
               </li>
             </>
           )}

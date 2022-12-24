@@ -1,0 +1,39 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3em;
+}
+
+.header-container {
+    width: 50%;
+}
+
+.username-container {
+    width: 50%;
+    text-align: left;
+    font-size: 2rem;
+}
+
+.date-container {
+    width: 50%;
+    text-align: left;
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.content-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.paragraphs-container {
+    width: 100%;
+    font-size: 1.8rem;
+}
+
+.title-container {
+    font-size: 3rem;
+}

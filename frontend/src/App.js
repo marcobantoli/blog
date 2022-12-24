@@ -1,12 +1,16 @@
 import React from 'react'
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import Axios from 'axios';
 import Navbar from './components/Navbar';
 import Home from './pages/Home.js';
 import Login from './pages/Login.js';
 import Register from './pages/Register.js';
-import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import Axios from 'axios';
+import PostPage from './pages/PostPage.js';
+import CreatePost from './pages/CreatePost.js';
+import MyPosts from './pages/MyPosts.js';
+import EditPost from './pages/EditPost.js';
 
 function App() {
   const [user, setUser] = useState({
@@ -23,6 +27,7 @@ function App() {
     });
 
     localStorage.removeItem('token');
+    navigate('/');
   };
 
   const handleLogin = async (username, password) => {
@@ -69,6 +74,50 @@ function App() {
       });
   };
 
+  const handleCreate = async (title, content, token) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    const postData = {
+      title,
+      content
+    }
+
+    Axios.post('/api/posts', postData, config)
+      .then(function (response) {
+        alert('Created: ' + response.status);
+        navigate('/me/posts');
+      })
+      .catch(function (err) {
+        alert(err.message);
+      });
+  };
+
+  const handleUpdate = async (title, content, id, token) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    };
+
+    const changes = {
+      title,
+      content
+    };
+
+    Axios.put(`/api/posts/${id}`, changes, config)
+      .then(function (response) {
+        alert('Updated: ' + response.status);
+        navigate(`/posts/${id}`);
+      })
+      .catch(function (err) {
+        alert(err.message);
+      });
+  };
+
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
@@ -76,6 +125,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route path="/register" element={<Register handleRegister={handleRegister} />} />
+        <Route path="/posts/:id" element={<PostPage />} />
+        <Route path="/me/posts" element={<MyPosts />} />
+        <Route path="/create" element={<CreatePost handleCreate={handleCreate} />} />
+        <Route path="/posts/:id/edit" element={<EditPost handleUpdate={handleUpdate} />} />
       </Routes>
     </>
   );

@@ -20,7 +20,7 @@ function Home() {
 
   return (
     <>
-      <div>Latest Posts</div>
+      <div className="latest-posts">Latest Posts</div>
       <PostList posts={posts} />
     </>
   );

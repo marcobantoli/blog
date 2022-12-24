@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { loginUser, registerUser, getMe } = require('../controllers/userController.js');
 const { protect } = require('../middleware/authMiddleware.js');
+const User = require('../models/userModel.js');
 
 // <-----Auth routes----->
 
@@ -27,15 +28,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-// // GET (one user) [WORKS]
-// app.get('/users/:id', async (req, res) => {
-//   try {
-//     const getUser = await pool.query('SELECT * FROM accounts WHERE user_id=$1', [req.params.id]);
-//     res.json(getUser.rows[0]);
-//   } catch {
-//     res.sendStatus(500);
-//   }
-// });
+// GET (one user) [WORKS]
+router.get('/:id', async (req, res) => {
+  try {
+    const getUser = await User.getById(req.params.id);
+    return res.json(getUser.rows[0]);
+  } catch {
+    res.sendStatus(500);
+  }
+});
 
 // // PUT [WORKS]
 // app.put('/users/:id', async (req, res) => {

@@ -1,20 +1,27 @@
-import React from 'react'
+import React from 'react';
+import { useNavigate } from "react-router-dom";
 import './Post.css';
 
 function Post({ datePosted, title, content, id }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/posts/${id}`);
+  };
+
   return (
-    <li className="post-container">
+    <li className="post-container" onClick={handleClick}>
         <div className="date">
-            {datePosted.slice(0, 10)}
+            {`${datePosted.slice(0, 10)}`}
         </div>
         <div className="title">
             {title}
         </div>
         <div className="content">
-            {content}
+            {`${content.slice(0, 100)}...`}
         </div>
     </li>
   );
 }
 
-export default Post
+export default Post;

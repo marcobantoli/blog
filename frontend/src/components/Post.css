@@ -1,7 +1,7 @@
 .post-container {
     width: 100%;
-    display: grid;
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
     border-top: 1px solid black;
     cursor: pointer;

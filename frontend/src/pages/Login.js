@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import './Login.css';
+import './LoginRegister.css';
 
 function Login({ handleLogin }) {
   const [formData, setFormData] = useState({
@@ -29,4 +29,4 @@ function Login({ handleLogin }) {
   );
 }
 
-export default Login
+export default Login;

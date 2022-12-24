@@ -1,0 +1,29 @@
+.edit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3em;
+    gap: 4em;
+    width: 50%;
+}
+
+.edit-title, .edit-content {
+    width: 100%;
+}
+
+.edit-title {
+    font-size: 3rem;
+    font-family: inherit;
+}
+
+.edit-content {
+    font-size: 1.8rem;
+    resize: none;
+    font-family: inherit;
+}
+
+.edit-button {
+    width: 30%;
+    font-family: inherit;
+    font-size: 2rem;
+}

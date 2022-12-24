@@ -10,6 +10,15 @@ const getPosts = async (req, res) => {
   }
 };
 
+const getUserPosts = async (req, res) => {
+  try {
+    const posts = await Post.getUserPosts(req.userId);
+    res.status(200).json(posts.rows);
+  } catch {
+    console.log('Error');
+  }
+};
+
 const setPost = async (req, res) => {
   try {
     const title = req.body.title;
@@ -66,19 +75,20 @@ const deletePost = async (req, res) => {
   res.send();
 };
 
-// const getPost = async (req, res) => {
-//   try {
-//     const getPost = await pool.query('SELECT * FROM posts WHERE post_id=$1', [req.params.id]);
-//     res.json(getPost.rows[0]);
-//   } catch {
-//     res.sendStatus(500);
-//   }
-// };
+const getPost = async (req, res) => {
+  try {
+    const getPost = await Post.getById(req.params.id);
+    res.json(getPost.rows[0]);
+  } catch {
+    res.sendStatus(500);
+  }
+};
 
 module.exports = {
     getPosts,
     setPost,
     updatePost,
     deletePost,
-    // getPost,
+    getPost,
+    getUserPosts
 };
