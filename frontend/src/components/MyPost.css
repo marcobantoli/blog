@@ -24,3 +24,14 @@
 .my-content {
   font-size: 1.2rem;
 }
+
+.edit-post, .delete-post {
+  font-size: 1.5rem;
+  font-family: inherit;
+}
+
+.edit-delete-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}

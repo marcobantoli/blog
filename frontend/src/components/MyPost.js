@@ -33,9 +33,9 @@ function MyPost({ datePosted, title, content, id, handleDelete }) {
           {`${content.slice(0, 100)}...`}
         </div>
       </li>
-      <div>
-        <button onClick={handleEditClick}>Edit</button>
-        <button onClick={handleDeleteClick}>Delete</button>
+      <div className="edit-delete-container">
+        <button className="edit-post" onClick={handleEditClick}>Edit</button>
+        <button className="delete-post" onClick={handleDeleteClick}>Delete</button>
       </div>
     </>
   );
