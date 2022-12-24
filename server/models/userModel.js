@@ -14,4 +14,8 @@ User.getById = (id) => {
     return pool.query('SELECT * FROM accounts WHERE user_id=$1', [id]);
 };
 
+User.getAll = () => {
+    return pool.query('SELECT * FROM accounts');
+}
+
 module.exports = User;

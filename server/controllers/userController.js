@@ -54,8 +54,28 @@ const generateToken = (id) => {
   return jwt.sign(id, process.env.ACCESS_TOKEN_SECRET);
 }
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.getAll();
+    res.json(users.rows);
+  } catch {
+    res.sendStatus(500);
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    const getUser = await User.getById(req.params.id);
+    return res.json(getUser.rows[0]);
+  } catch {
+    res.sendStatus(500);
+  }
+};
+
 module.exports = {
     loginUser,
     registerUser,
     getMe,
+    getAllUsers,
+    getUser
 };

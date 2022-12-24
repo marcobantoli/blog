@@ -1,9 +1,7 @@
-const pool = require('../config/db.js');
 const express = require('express');
 const router = express.Router();
-const { loginUser, registerUser, getMe } = require('../controllers/userController.js');
+const { loginUser, registerUser, getMe, getAllUsers, getUser } = require('../controllers/userController.js');
 const { protect } = require('../middleware/authMiddleware.js');
-const User = require('../models/userModel.js');
 
 // <-----Auth routes----->
 
@@ -19,24 +17,10 @@ router.get('/me', protect, getMe);
 // <-----Auth routes END----->
 
 // GET (all users) [WORKS]
-router.get('/', async (req, res) => {
-  try {
-    const users = await pool.query('SELECT * FROM accounts');
-    res.json(users.rows);
-  } catch {
-    res.sendStatus(500);
-  }
-});
+router.get('/', getAllUsers);
 
 // GET (one user) [WORKS]
-router.get('/:id', async (req, res) => {
-  try {
-    const getUser = await User.getById(req.params.id);
-    return res.json(getUser.rows[0]);
-  } catch {
-    res.sendStatus(500);
-  }
-});
+router.get('/:id', getUser);
 
 // // PUT [WORKS]
 // app.put('/users/:id', async (req, res) => {
